@@ -1,72 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { UserProvider } from './contexts/UserContext';
-import { useApi } from './api/api';
-import { useUser } from './hooks/useUser';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import AdsPage from "./pages/ads";
+import AdDetails from "./pages/ad";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Header from "./components/Header";
+import { UserProvider } from "./contexts/UserContext";
+
+// function ProtectedRoute({ children }: { children: JSX.Element }) {
+//     const { isAuthenticated } = useUser();
+//     return isAuthenticated ? children : <Navigate to="/login" replace />;
+// }
 
 const App: React.FC = () => {
-    const { get, post } = useApi();
-    const { isAuthenticated, authenticate, logout } = useUser();
-    const [data, setData] = useState<any>(null);
-
-    useEffect(() => {2
-        // Пример GET запроса
-        if (isAuthenticated) {
-            get('/user')
-                .then(response => {
-                    setData(response.data);
-                })
-                .catch(error => {
-                    console.error('GET request error:', error);
-                });
-        }
-    }, [get, isAuthenticated]);
-
-    const handleRegister = () => {
-        // Пример POST запроса для регистрации
-        post('/user/signup', { username: 'testuser3', password: 'testpassword' })
-            .then(response => {
-                console.log('Registration response:', response);
-                // Обработка ответа и вызов authenticate
-                const token = response.headers.authorization?.split(' ')[1];
-                if (token) {
-                    authenticate('testuser', token);
-                }
-            })
-            .catch(error => {
-                console.error('Registration request error:', error);
-            });
-    };
-
-    const handleLogin = () => {
-        // Пример POST запроса для авторизации
-        post('/user/login', { username: 'testuser3', password: 'testpassword' })
-            .then(response => {
-                console.log('Login response:', response);
-                // Обработка ответа и вызов authenticate
-                const token = response.headers.authorization?.split(' ')[1];
-                if (token) {
-                    authenticate('testuser', token);
-                }
-            })
-            .catch(error => {
-                console.error('Login request error:', error);
-            });
-    };
-
     return (
         <UserProvider>
-            <div>
-                <button onClick={handleRegister} disabled={isAuthenticated}>
-                    Register
-                </button>
-                <button onClick={handleLogin} disabled={isAuthenticated}>
-                    Login
-                </button>
-                <button onClick={logout} disabled={!isAuthenticated}>
-                    Logout
-                </button>
-                <pre>{JSON.stringify(data, null, 2)}</pre>
-            </div>
+            <Router>
+                <Header />
+                <div className="container mx-auto p-4">
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/ads" replace />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/ads" element={<AdsPage />} />
+                        <Route path="/ads/:id" element={<AdDetails />} />
+                        <Route path="*" element={<h1>Страница не найдена</h1>} />
+                    </Routes>
+                </div>
+            </Router>
         </UserProvider>
     );
 };
