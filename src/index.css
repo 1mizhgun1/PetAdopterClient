@@ -66,3 +66,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.ad-card-container {
+  flex: 1 1 400px; /* flex-grow: 1, flex-shrink: 1, flex-basis: 300px */
+  min-width: 400px;
+  max-width: 400px;
+  margin-bottom: 1rem; /* Нижний отступ для карточек */
+}

@@ -37,7 +37,14 @@ export const useApi = () => {
     };
 
     const post = async <T>(url: string, data?: any): Promise<AxiosResponse<T>> => {
-        return api.post<T>(url, data, config);
+        const isFormData = data instanceof FormData;
+
+        return api.post<T>(url, data, {
+            headers: {
+                ...config.headers,
+                ...(isFormData ? { "Content-Type": "multipart/form-data" } : {}),
+            },
+        });
     };
 
     return { get, post };

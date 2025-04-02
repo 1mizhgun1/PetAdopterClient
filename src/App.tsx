@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Header from "./components/Header";
 import { UserProvider } from "./contexts/UserContext";
+import CreateAdForm from "./components/CreateAdForm.tsx";
 
 // function ProtectedRoute({ children }: { children: JSX.Element }) {
 //     const { isAuthenticated } = useUser();
@@ -24,6 +25,7 @@ const App: React.FC = () => {
                         <Route path="/register" element={<Register />} />
                         <Route path="/ads" element={<AdsPage />} />
                         <Route path="/ads/:id" element={<AdDetails />} />
+                        <Route path="/ads/create" element={<CreateAdForm />} />
                         <Route path="*" element={<h1>Страница не найдена</h1>} />
                     </Routes>
                 </div>

@@ -30,10 +30,13 @@ const Header: React.FC = () => {
             <div>
                 {isAuthenticated ? (
                     <div className="flex items-center gap-4">
-                        <span className="text-lg">{username}</span>
+                        <span className="text-lg" style={{ color: 'black' }}>{username}</span>
                         <button onClick={handleLogout} className="bg-red-500 px-4 py-2 rounded">
                             Выйти
                         </button>
+                        <Link to="/ads/create" className="bg-blue-500 px-4 py-2 rounded">
+                            + Создать объявление
+                        </Link>
                     </div>
                 ) : (
                     <div className="flex gap-4">
