@@ -22,12 +22,12 @@ interface Ad {
 
 const Ads: React.FC = () => {
     const { get } = useApi();
-    const [ads, setAds] = useState<Ad[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [ ads, setAds ] = useState<Ad[]>([]);
+    const [ loading, setLoading ] = useState(true);
     const { username, locality } = useUser();
 
     const [selectedAnimal, setSelectedAnimal] = useState("");
-    const [selectedBreed, setSelectedBreed] = useState("");
+    const [selectedBreed, setSelectedBreed] = useState<string | null>("");
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
     const [radius, setRadius] = useState("");
@@ -39,6 +39,7 @@ const Ads: React.FC = () => {
         if (minPrice) params.append("min_price", minPrice);
         if (maxPrice) params.append("max_price", maxPrice);
         if (radius) params.append("radius", radius);
+        // @ts-ignore
         if (radius) params.append("username", username);
         get(`/ads?${params.toString()}`)
             .then((response) => {
@@ -62,7 +63,8 @@ const Ads: React.FC = () => {
                 <DropdownSelect
                     endpoint="/animals"
                     label="Животное"
-                    onChange={(id) => {setSelectedAnimal(id); setSelectedBreed("");}}
+                    onChange={(id) => {setSelectedAnimal(id); setSelectedBreed(null);}}
+                    initialState={null}
                 />
                 <DropdownSelect
                     endpoint="/breeds"
@@ -70,6 +72,7 @@ const Ads: React.FC = () => {
                     label="Порода"
                     onChange={(id) => setSelectedBreed(id)}
                     disabled={!selectedAnimal}
+                    initialState={null}
                 />
                 <input
                     type="number"

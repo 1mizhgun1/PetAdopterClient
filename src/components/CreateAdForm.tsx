@@ -46,27 +46,40 @@ const CreateAdForm: React.FC = () => {
             {error && <p className="ad-form-error">{error}</p>}
 
             <form onSubmit={handleSubmit} className="ad-form">
-                <input name="title" type="text" placeholder="Заголовок" className="ad-input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
+                <label className="create-ad-form-label">Название объявления - будет отображаться в общем списке</label>
+                <input name="title" type="text" placeholder="Заголовок" className="ad-input" value={form.title}
+                       onChange={(e) => setForm({...form, title: e.target.value})} required/>
 
-                <textarea name="description" placeholder="Описание" className="ad-input ad-textarea" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
+                <label className="create-ad-form-label">Расскажите о питомце</label>
+                <textarea name="description" placeholder="Описание" className="ad-input ad-textarea"
+                          value={form.description} onChange={(e) => setForm({...form, description: e.target.value})}
+                          required/>
 
                 <DropdownSelect
                     endpoint="/animals"
                     label="Выберите животное"
-                    onChange={(id) => setForm({ ...form, animal_id: id, breed_id: "" })}
+                    onChange={(id) => setForm({...form, animal_id: id, breed_id: ""})}
+                    initialState={null}
                 />
                 <DropdownSelect
                     endpoint="/breeds"
                     param={form.animal_id}
                     label="Выберите породу животного"
-                    onChange={(id) => setForm({ ...form, breed_id: id })}
+                    onChange={(id) => setForm({...form, breed_id: id})}
                     disabled={!form.animal_id}
+                    initialState={null}
                 />
 
-                <input name="price" type="number" placeholder="Цена" className="ad-input" value={form.price} onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })} required />
-                <input name="contacts" type="text" placeholder="Контакты" className="ad-input" value={form.contacts} onChange={(e) => setForm({ ...form, contacts: e.target.value })} required />
-
-                <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} className="ad-input" required />
+                <label className="create-ad-form-label">Укажите цену в российских рублях, либо оставьте 0 (отдать в
+                    добрые руки 😊)</label>
+                <input name="price" type="number" placeholder="Цена" className="ad-input" value={form.price}
+                       onChange={(e) => setForm({...form, price: parseInt(e.target.value)})} required/>
+                <label className="create-ad-form-label">Укажите, как с Вами можно связаться</label>
+                <input name="contacts" type="text" placeholder="Контакты" className="ad-input" value={form.contacts}
+                       onChange={(e) => setForm({...form, contacts: e.target.value})} required/>
+                <label className="create-ad-form-label">Прикрепите фотографию животного</label>
+                <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+                       className="ad-input" required/>
 
                 <button type="submit" className="ad-submit-button">Создать</button>
             </form>

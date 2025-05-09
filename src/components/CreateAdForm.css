@@ -59,3 +59,8 @@
 .ad-submit-button:hover {
     background-color: #0056b3;
 }
+
+.create-ad-form-label {
+    font-weight: 500;
+    font-size: 14px;
+}

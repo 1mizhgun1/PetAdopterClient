@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import React from "react";
 import { useApi } from "../api/api.ts";
@@ -8,6 +8,7 @@ import GeoLocationSelector from "./GeoLocationSelector.tsx";
 const Header: React.FC = () => {
     const { isAuthenticated, username, logout } = useUser();
     const { post } = useApi();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         if (!username) return;
@@ -17,6 +18,7 @@ const Header: React.FC = () => {
 
             if (response.status === 200) {
                 logout()
+                navigate("/ads");
             } else {
                 console.error("Ошибка выхода");
             }

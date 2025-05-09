@@ -39,7 +39,12 @@ const GeoLocationSelector: React.FC = () => {
 
     return (
         <button onClick={handleClick} disabled={loading} className="geo-button">
-            {"📍" + locality || (loading ? 'Определяем...' : 'Указать местоположение')}
+            {locality
+                ? `📍 ${locality}`
+                : loading
+                    ? 'Определяем...'
+                    : 'Указать местоположение'
+            }
         </button>
     );
 };

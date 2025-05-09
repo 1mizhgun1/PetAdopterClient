@@ -8,12 +8,13 @@ interface DropdownSelectProps {
     label: string;
     onChange: (id: string) => void;
     disabled?: boolean;
+    initialState: string | null;
 }
 
-const DropdownSelect: React.FC<DropdownSelectProps> = ({ endpoint, param, label, onChange, disabled }) => {
+const DropdownSelect: React.FC<DropdownSelectProps> = ({ endpoint, param, label, onChange, disabled, initialState }) => {
     const { get } = useApi();
     const [items, setItems] = useState<{ id: string; name: string }[]>([]);
-    const [selected, setSelected] = useState<string | null>(null);
+    const [selected, setSelected] = useState<string | null>(initialState);
 
     useEffect(() => {
         let url = param ? `${endpoint}?animal_id=${param}` : endpoint;

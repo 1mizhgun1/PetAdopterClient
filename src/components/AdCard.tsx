@@ -11,7 +11,6 @@ interface AdCardProps {
   locality: string;
 }
 
-
 const AdCard: React.FC<AdCardProps> = ({ id, title, photoUrl, description, price, locality }) => {
     return (
         <Link to={`/ads/${id}`} className="ad-card-link">
