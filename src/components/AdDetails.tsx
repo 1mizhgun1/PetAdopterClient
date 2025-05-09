@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { useApi } from '../api/api';
 import './AdDetails.css';
+import {useUser} from "../hooks/useUser.ts";
 
 interface Ad {
     info: {
@@ -23,8 +24,10 @@ interface Ad {
 const AdDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { get } = useApi();
-    const [ad, setAd] = useState<Ad | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [ ad, setAd ] = useState<Ad | null>(null);
+    const [ loading, setLoading ] = useState(true);
+    const { username } = useUser();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id) return;
@@ -45,7 +48,14 @@ const AdDetails: React.FC = () => {
 
     return (
         <div className="ad-details-page">
-            <h1 className="ad-title">{ad.info.title}</h1>
+            <div className="ad-header">
+                <h1 className="ad-title">{ad.info.title}</h1>
+                {username === ad.extra_info.username && (
+                    <button className="edit-button" onClick={() => navigate(`/ads/${ad.info.id}/edit`, {state: {ad}})}>
+                        ✏️ Редактировать
+                    </button>
+                )}
+            </div>
 
             <div className="ad-content">
                 <div className="ad-photo">
