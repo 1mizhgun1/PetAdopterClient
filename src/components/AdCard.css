@@ -1,0 +1,89 @@
+.ad-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.ad-card-link * {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ad-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    max-width: 400px;
+}
+
+.ad-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ad-card-image {
+    height: 200px;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ad-card-image img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.ad-card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ad-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.ad-card-title a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.ad-card-title a:hover {
+    text-decoration: underline;
+}
+
+.ad-card-description {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.4;
+    max-height: 3.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ad-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+.ad-card-price {
+    font-weight: bold;
+    color: #111827;
+}
+
+.ad-card-location {
+    color: #9ca3af;
+}

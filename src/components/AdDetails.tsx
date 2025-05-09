@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useApi } from '../api/api';
+import './AdDetails.css';
 
 interface Ad {
     info: {
@@ -43,20 +44,49 @@ const AdDetails: React.FC = () => {
     if (!ad) return <p className="text-center">Объявление не найдено</p>;
 
     return (
-        <div className="max-w-2xl mx-auto p-4">
-            <img
-                src={`http://localhost/pet_adopter_photos/${ad.info.photo_url}`}
-                alt={ad.info.title}
-                className="w-full h-64 object-cover rounded-lg"
-            />
-            <h1 className="text-2xl font-bold mt-4">{ad.info.title}</h1>
-            <p className="text-gray-600">{ad.info.description}</p>
-            <p className="text-xl font-semibold mt-2">{ad.info.price} ₽</p>
-            <p className="text-sm text-gray-500">
-                {ad.extra_info.animal_name} • {ad.extra_info.breed_name} •{" "}
-                {ad.extra_info.locality_name}
-            </p>
-            <p className="mt-4 text-blue-600">Контакты: {ad.info.contacts}</p>
+        <div className="ad-details-page">
+            <h1 className="ad-title">{ad.info.title}</h1>
+
+            <div className="ad-content">
+                <div className="ad-photo">
+                    <img
+                        src={`http://localhost/pet_adopter_photos/${ad.info.photo_url}`}
+                        alt={ad.info.title}
+                    />
+                </div>
+
+                <div className="ad-info">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Животное:</th>
+                            <td>{ad.extra_info.animal_name}</td>
+                        </tr>
+                        <tr>
+                            <th>Порода:</th>
+                            <td>{ad.extra_info.breed_name}</td>
+                        </tr>
+                        <tr>
+                            <th>Цена:</th>
+                            <td>{ad.info.price === 0 ? "Бесплатно" : `${ad.info.price} ₽`}</td>
+                        </tr>
+                        <tr>
+                            <th>Местоположение:</th>
+                            <td>{ad.extra_info.locality_name === "" ? "не указано" : ad.extra_info.locality_name}</td>
+                        </tr>
+                        <tr>
+                            <th>Контакты:</th>
+                            <td>{ad.info.contacts}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div className="ad-description">
+                        <h2>Описание</h2>
+                        <p>{ad.info.description}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

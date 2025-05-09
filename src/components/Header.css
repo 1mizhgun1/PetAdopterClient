@@ -1,0 +1,75 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.username {
+    font-size: 1rem;
+    color: #555;
+}
+
+.locality {
+    font-size: 1rem;
+    color: #595;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button.login {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.button.register {
+    background-color: #10b981;
+    color: white;
+}
+
+.button.logout {
+    background-color: #ef4444;
+    color: white;
+}
+
+.button.create {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.button:hover {
+    opacity: 0.9;
+}

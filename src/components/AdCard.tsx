@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './AdCard.css';
 
 interface AdCardProps {
   id: string;
@@ -10,33 +11,28 @@ interface AdCardProps {
   locality: string;
 }
 
+
 const AdCard: React.FC<AdCardProps> = ({ id, title, photoUrl, description, price, locality }) => {
-  return (
-      <div className="card shadow-lg border rounded-lg mb-4">
-        <div className="position-relative" style={{ height: '200px' }}>
-          <img
-              src={`http://localhost/pet_adopter_photos/${photoUrl}`}
-              alt={title}
-              className="card-img-top position-absolute top-50 start-50 translate-middle"
-              style={{ maxHeight: '100%', objectFit: 'contain' }}
-          />
-        </div>
-        <div className="card-body">
-          <h5 className="card-title">
-            <Link to={`/ads/${id}`} className="text-primary text-decoration-none">
-              {title}
-            </Link>
-          </h5>
-          <p className="card-text text-muted text-truncate" style={{ maxWidth: '100%' }}>
-            {description}
-          </p>
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <span className="font-weight-bold">{price} ₽</span>
-            <span className="text-muted small">{locality}</span>
-          </div>
-        </div>
-      </div>
-  );
+    return (
+        <Link to={`/ads/${id}`} className="ad-card-link">
+            <div className="ad-card">
+                <div className="ad-card-image">
+                    <img
+                        src={`http://localhost/pet_adopter_photos/${photoUrl}`}
+                        alt={title}
+                    />
+                </div>
+                <div className="ad-card-body">
+                    <h3 className="ad-card-title">{title}</h3>
+                    <p className="ad-card-description">{description}</p>
+                    <div className="ad-card-meta">
+                        <span className="ad-card-price">{price === 0 ? "Бесплатно" : `${price} ₽`}</span>
+                        <span className="ad-card-location">📍{locality === "" ? "не указано" : locality}</span>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    );
 };
 
 export default AdCard;

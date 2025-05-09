@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../api/api";
+import "./DropdownSelect.css";
 
 interface DropdownSelectProps {
     endpoint: string;
@@ -17,15 +18,15 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({ endpoint, param, label,
     useEffect(() => {
         let url = param ? `${endpoint}?animal_id=${param}` : endpoint;
         get(url)
-            .then((res) => setItems(res.data as { id: string; name: string }[] ))
+            .then((res) => setItems(res.data as { id: string; name: string }[]))
             .catch((err) => console.error(`Ошибка загрузки ${label}:`, err));
     }, [endpoint, param]);
 
     return (
-        <div>
-            <label className="block font-medium">{label}</label>
+        <div className="dropdown-container">
+            <label className="dropdown-label">{label}</label>
             <select
-                className="input"
+                className="dropdown-select"
                 onChange={(e) => {
                     setSelected(e.target.value);
                     onChange(e.target.value);
@@ -33,8 +34,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({ endpoint, param, label,
                 value={selected || ""}
                 disabled={disabled}
             >
-                <option value="" disabled>
-                    Выберите {label.toLowerCase()}
+                <option value="">
+                    Не выбрано
                 </option>
                 {items.map((item) => (
                     <option key={item.id} value={item.id}>

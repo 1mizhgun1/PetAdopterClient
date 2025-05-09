@@ -3,6 +3,7 @@ import { useUser } from "../hooks/useUser";
 import { useApi } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import DropdownSelect from "../components/DropdownSelect";
+import "./CreateAdForm.css";
 
 const CreateAdForm: React.FC = () => {
     const { username } = useUser();
@@ -40,31 +41,34 @@ const CreateAdForm: React.FC = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Создать объявление</h2>
-            {error && <p className="text-red-500">{error}</p>}
+        <div className="ad-form-container">
+            <h2 className="ad-form-title">Создать объявление</h2>
+            {error && <p className="ad-form-error">{error}</p>}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <input name="title" type="text" placeholder="Заголовок" className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
-                <textarea name="description" placeholder="Описание" className="input" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
+            <form onSubmit={handleSubmit} className="ad-form">
+                <input name="title" type="text" placeholder="Заголовок" className="ad-input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
 
-                {/* Выпадающий список животных */}
-                <DropdownSelect endpoint="/animals" label="Животное" onChange={(id) => setForm({ ...form, animal_id: id, breed_id: "" })} />
+                <textarea name="description" placeholder="Описание" className="ad-input ad-textarea" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
 
-                {/* Выпадающий список пород (зависит от animal_id) */}
+                <DropdownSelect
+                    endpoint="/animals"
+                    label="Выберите животное"
+                    onChange={(id) => setForm({ ...form, animal_id: id, breed_id: "" })}
+                />
                 <DropdownSelect
                     endpoint="/breeds"
                     param={form.animal_id}
-                    label="Порода"
+                    label="Выберите породу животного"
                     onChange={(id) => setForm({ ...form, breed_id: id })}
                     disabled={!form.animal_id}
                 />
 
-                <input name="price" type="number" placeholder="Цена" className="input" value={form.price} onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })} required />
-                <input name="contacts" type="text" placeholder="Контакты" className="input" value={form.contacts} onChange={(e) => setForm({ ...form, contacts: e.target.value })} required />
-                <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} required />
+                <input name="price" type="number" placeholder="Цена" className="ad-input" value={form.price} onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })} required />
+                <input name="contacts" type="text" placeholder="Контакты" className="ad-input" value={form.contacts} onChange={(e) => setForm({ ...form, contacts: e.target.value })} required />
 
-                <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 w-full">Создать</button>
+                <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} className="ad-input" required />
+
+                <button type="submit" className="ad-submit-button">Создать</button>
             </form>
         </div>
     );

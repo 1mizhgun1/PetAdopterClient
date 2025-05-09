@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import React from "react";
-import {useApi} from "../api/api.ts";
+import { useApi } from "../api/api.ts";
+import './Header.css';
+import GeoLocationSelector from "./GeoLocationSelector.tsx";
 
 const Header: React.FC = () => {
     const { isAuthenticated, username, logout } = useUser();
@@ -24,27 +26,24 @@ const Header: React.FC = () => {
     }
 
     return (
-        <header className="bg-gray-900 text-white p-4 flex justify-between items-center">
-            <Link to="/ads" className="text-xl font-bold">Pet Adopter</Link>
+        <header className="header">
+            <Link to="/ads" className="logo">🐾 Pet Adopter</Link>
 
-            <div>
+            <nav className="nav">
                 {isAuthenticated ? (
-                    <div className="flex items-center gap-4">
-                        <span className="text-lg" style={{ color: 'black' }}>{username}</span>
-                        <button onClick={handleLogout} className="bg-red-500 px-4 py-2 rounded">
-                            Выйти
-                        </button>
-                        <Link to="/ads/create" className="bg-blue-500 px-4 py-2 rounded">
-                            + Создать объявление
-                        </Link>
-                    </div>
+                    <>
+                        <span className="username">Привет, {username}!</span>
+                        <GeoLocationSelector />
+                        <Link to="/ads/create" className="button create">+ Объявление</Link>
+                        <button onClick={handleLogout} className="button logout">Выйти</button>
+                    </>
                 ) : (
-                    <div className="flex gap-4">
-                        <Link to="/login" className="bg-blue-500 px-4 py-2 rounded">Войти</Link>
-                        <Link to="/register" className="bg-green-500 px-4 py-2 rounded">Регистрация</Link>
-                    </div>
+                    <>
+                        <Link to="/login" className="button login">Войти</Link>
+                        <Link to="/register" className="button register">Регистрация</Link>
+                    </>
                 )}
-            </div>
+            </nav>
         </header>
     );
 }

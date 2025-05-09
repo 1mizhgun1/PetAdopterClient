@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useUser } from '../hooks/useUser';
 import { useEffect, useState } from 'react';
 
-const API_BASE_URL = 'http://localhost:80/api/v1';
+const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
