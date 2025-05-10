@@ -19,20 +19,13 @@ const UserContext = createContext<UserContextType>({
 });
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [username, setUsername] = React.useState<string | null>(null);
-    const [locality, setLocality] = React.useState<string | null>(null);
-    const [token, setToken] = React.useState<string | null>(null);
+    const storedUsername = localStorage.getItem('username');
+    const storedLocality = localStorage.getItem('locality');
+    const storedToken = localStorage.getItem('token');
 
-    React.useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const storedLocality = localStorage.getItem('locality');
-        const storedToken = localStorage.getItem('token');
-        if (storedUsername && storedToken) {
-            setUsername(storedUsername);
-            setLocality(storedLocality);
-            setToken(storedToken);
-        }
-    }, []);
+    const [username, setUsername] = React.useState<string | null>(storedUsername);
+    const [locality, setLocality] = React.useState<string | null>(storedLocality);
+    const [token, setToken] = React.useState<string | null>(storedToken);
 
     const updateLocality = (locality: string) => {
         setLocality(locality)
