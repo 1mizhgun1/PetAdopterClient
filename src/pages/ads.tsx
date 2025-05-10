@@ -39,8 +39,6 @@ const Ads: React.FC = () => {
         if (minPrice) params.append("min_price", minPrice);
         if (maxPrice) params.append("max_price", maxPrice);
         if (radius) params.append("radius", radius);
-        // @ts-ignore
-        if (radius) params.append("username", username);
         get(`/ads?${params.toString()}`)
             .then((response) => {
                 const data = response.data as { ads: Ad[] };
@@ -88,9 +86,7 @@ const Ads: React.FC = () => {
                     value={maxPrice}
                     onChange={e => setMaxPrice(e.target.value.replace(/\D/g, ''))}
                 />
-                {locality === "" ? (
-                    <></>
-                ) : (
+                {username && locality &&
                     <input
                         type="number"
                         placeholder="Радиус поиска (км)"
@@ -98,7 +94,7 @@ const Ads: React.FC = () => {
                         value={radius}
                         onChange={e => setRadius(e.target.value.replace(/\D/g, ''))}
                     />
-                )}
+                }
 
                 <button className="search-button" onClick={fetchAds}>Поиск</button>
             </div>

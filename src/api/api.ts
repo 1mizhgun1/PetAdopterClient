@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useUser } from '../hooks/useUser';
-import { useEffect, useState } from 'react';
 
 const API_BASE_URL = 'http://localhost/api/v1';
 
@@ -14,26 +13,14 @@ const api = axios.create({
 });
 
 export const useApi = () => {
-    const { isAuthenticated, token, username } = useUser();
-    const [config, setConfig] = useState<AxiosRequestConfig>({});
+    const { token, username } = useUser();
 
-    useEffect(() => {
-        if (isAuthenticated && token && username) {
-            setConfig({
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                params: {
-                    username: username,
-                },
-            });
-        } else {
-            setConfig({});
-        }
-    }, [isAuthenticated, token, username]);
-
-    const get = async <T>(url: string, params?: any): Promise<AxiosResponse<T>> => {
-        return api.get<T>(url, { ...config, params });
+    const get = async <T>(url: string): Promise<AxiosResponse<T>> => {
+        const config: AxiosRequestConfig = {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            params: username ? { username } : {},
+        };
+        return api.get<T>(url, config);
     };
 
     const post = async <T>(url: string, data?: any): Promise<AxiosResponse<T>> => {
@@ -41,9 +28,10 @@ export const useApi = () => {
 
         return api.post<T>(url, data, {
             headers: {
-                ...config.headers,
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
                 ...(isFormData ? { "Content-Type": "multipart/form-data" } : {}),
             },
+            params: username ? { username } : {},
         });
     };
 

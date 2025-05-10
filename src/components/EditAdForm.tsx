@@ -3,13 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useApi } from "../api/api";
 import DropdownSelect from "../components/DropdownSelect";
 import "./CreateAdForm.css";
-import {useUser} from "../hooks/useUser.ts";
 
 const EditAdForm: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { post } = useApi();
-    const { username } = useUser();
 
     const ad = location.state?.ad;
 
@@ -32,7 +30,7 @@ const EditAdForm: React.FC = () => {
 
         try {
             if (fieldsToUpdate.length > 0) {
-                await post(`/ads/${ad.info.id}/update?username=${username}`, {
+                await post(`/ads/${ad.info.id}/update`, {
                     form,
                     fields_to_update: fieldsToUpdate,
                 });
@@ -41,7 +39,7 @@ const EditAdForm: React.FC = () => {
             if (photo) {
                 const formData = new FormData();
                 formData.append("photo", photo);
-                await post(`/ads/${ad.info.id}/update_photo?username=${username}`, formData);
+                await post(`/ads/${ad.info.id}/update_photo`, formData);
             }
 
             navigate(`/ads/${ad.info.id}`);

@@ -33,7 +33,7 @@ const CreateAdForm: React.FC = () => {
         formData.append("photo", photo);
 
         try {
-            await post(`/ads/create?username=${username}`, formData);
+            await post(`/ads/create`, formData);
             navigate("/ads");
         } catch (err) {
             setError("Ошибка при создании объявления.");

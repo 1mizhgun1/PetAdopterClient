@@ -9,11 +9,6 @@ import { UserProvider } from "./contexts/UserContext";
 import CreateAdForm from "./components/CreateAdForm.tsx";
 import EditAdForm from "./components/EditAdForm.tsx";
 
-// function ProtectedRoute({ children }: { children: JSX.Element }) {
-//     const { isAuthenticated } = useUser();
-//     return isAuthenticated ? children : <Navigate to="/login" replace />;
-// }
-
 const App: React.FC = () => {
     return (
         <UserProvider>

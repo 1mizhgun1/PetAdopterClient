@@ -6,7 +6,7 @@ import './Header.css';
 import GeoLocationSelector from "./GeoLocationSelector.tsx";
 
 const Header: React.FC = () => {
-    const { isAuthenticated, username, logout } = useUser();
+    const { username, logout } = useUser();
     const { post } = useApi();
     const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const Header: React.FC = () => {
         if (!username) return;
 
         try {
-            const response = await post(`/user/logout?username=${username}`);
+            const response = await post(`/user/logout`);
 
             if (response.status === 200) {
                 logout()
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
             <Link to="/ads" className="logo">🐾 Pet Adopter</Link>
 
             <nav className="nav">
-                {isAuthenticated ? (
+                {username ? (
                     <>
                         <span className="username">Привет, {username}!</span>
                         <GeoLocationSelector />

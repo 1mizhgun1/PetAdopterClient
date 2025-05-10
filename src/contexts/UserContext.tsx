@@ -1,7 +1,6 @@
 import React, { createContext, ReactNode } from 'react';
 
 interface UserContextType {
-    isAuthenticated: boolean;
     username: string | null;
     locality: string | null;
     token: string | null;
@@ -12,7 +11,6 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType>({
     updateLocality: () => {},
-    isAuthenticated: false,
     username: null,
     locality: null,
     token: null,
@@ -21,7 +19,6 @@ const UserContext = createContext<UserContextType>({
 });
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
     const [username, setUsername] = React.useState<string | null>(null);
     const [locality, setLocality] = React.useState<string | null>(null);
     const [token, setToken] = React.useState<string | null>(null);
@@ -31,7 +28,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const storedLocality = localStorage.getItem('locality');
         const storedToken = localStorage.getItem('token');
         if (storedUsername && storedToken) {
-            setIsAuthenticated(true);
             setUsername(storedUsername);
             setLocality(storedLocality);
             setToken(storedToken);
@@ -44,7 +40,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const authenticate = (username: string, locality: string, token: string) => {
-        setIsAuthenticated(true);
         setUsername(username);
         setLocality(locality);
         setToken(token);
@@ -54,7 +49,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const logout = () => {
-        setIsAuthenticated(false);
         setUsername(null);
         setLocality(null);
         setToken(null);
@@ -64,7 +58,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     return (
-        <UserContext.Provider value={{ isAuthenticated, username, locality, token, updateLocality, authenticate, logout }}>
+        <UserContext.Provider value={{ username, locality, token, updateLocality, authenticate, logout }}>
             {children}
         </UserContext.Provider>
     );
