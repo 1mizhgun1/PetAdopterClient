@@ -20,7 +20,7 @@ const GeoLocationSelector: React.FC = () => {
                 console.log(position);
                 const { latitude, longitude } = position.coords;
                 try {
-                    const response = await post('/user/set_locality', `{"latitude":"${latitude}","longitude":"${longitude}"}`);
+                    const response = await post('/user/set_locality', `{"latitude":${latitude},"longitude":${longitude}}`);
                     // @ts-ignore
                     const locality = response.data.locality;
                     updateLocality(locality);
