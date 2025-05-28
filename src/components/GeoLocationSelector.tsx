@@ -30,9 +30,19 @@ const GeoLocationSelector: React.FC = () => {
                     setLoading(false);
                 }
             },
-            (error) => {
+            async (error) => {
                 console.error('Ошибка получения геолокации:', error);
-                setLoading(false);
+
+                try {
+                    const response = await post('/user/set_locality', `{"latitude": 55.755833,"longitude": 37.617778}`);
+                    // @ts-ignore
+                    const locality = response.data.locality;
+                    updateLocality(locality);
+                } catch (error) {
+                    console.error('Ошибка при отправке геолокации:', error);
+                } finally {
+                    setLoading(false);
+                }
             }
         );
     };
